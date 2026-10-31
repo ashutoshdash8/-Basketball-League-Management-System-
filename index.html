@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Basketball League Management System</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header><h1>🏀 Basketball League Management System</h1>
+<p>MCA Data Science · ADBMS Mini Project · MySQL + Flask</p></header>
+
+<nav id="tabs">
+  <button data-tab="standings" class="active">Standings</button>
+  <button data-tab="report">Player Report</button>
+  <button data-tab="scorers">Top Scorers</button>
+  <button data-tab="matches">Matches</button>
+  <button data-tab="manage">Add / Record</button>
+</nav>
+
+<main>
+ <section id="standings" class="tab">
+  <div class="card"><h2>Points table</h2><div class="scroll"><table id="t-standings"></table></div></div>
+ </section>
+
+ <section id="report" class="tab hidden">
+  <div class="card"><h2>Player report (calc_efficiency + get_player_grade)</h2><div class="scroll"><table id="t-report"></table></div></div>
+ </section>
+
+ <section id="scorers" class="tab hidden">
+  <div class="card"><h2>Top scorers (cursor procedure)</h2>
+   <div class="row"><label>How many players<input id="n" type="number" min="1" value="3"></label>
+   <button class="primary" id="go-scorers">Show</button></div>
+   <div class="scroll"><table id="t-scorers"></table></div></div>
+ </section>
+
+ <section id="matches" class="tab hidden">
+  <div class="card"><h2>All matches</h2><div class="scroll"><table id="t-matches"></table></div></div>
+ </section>
+
+ <section id="manage" class="tab hidden">
+  <div class="card"><h2>Record a match <small>(record_match → trigger updates standings)</small></h2>
+   <form id="f-match">
+    <label>Date<input type="date" name="match_date" required></label>
+    <label>Team 1<select name="team1_id" class="teams" required></select></label>
+    <label>Team 2<select name="team2_id" class="teams" required></select></label>
+    <label>Score 1<input type="number" name="score1" required></label>
+    <label>Score 2<input type="number" name="score2" required></label>
+    <button class="primary">Record</button></form></div>
+
+  <div class="card"><h2>Add a player <small>(add_player procedure)</small></h2>
+   <form id="f-player">
+    <label>Name<input name="player_name" required></label>
+    <label>Team<select name="team_id" class="teams" required></select></label>
+    <label>Position<select name="position"><option>Guard</option><option>Forward</option><option>Center</option></select></label>
+    <label>Jersey no.<input type="number" name="jersey_no" required></label>
+    <button class="primary">Add player</button></form></div>
+
+  <div class="card"><h2>Add player stats <small>(trigger validates)</small></h2>
+   <form id="f-stats">
+    <label>Match<select name="match_id" id="sel-match" required></select></label>
+    <label>Player<select name="player_id" id="sel-player" required></select></label>
+    <label>Points<input type="number" name="points" required></label>
+    <label>Rebounds<input type="number" name="rebounds" required></label>
+    <label>Assists<input type="number" name="assists" required></label>
+    <label>Steals<input type="number" name="steals" required></label>
+    <label>Minutes (0-60)<input type="number" name="minutes" required></label>
+    <button class="primary">Save stats</button></form></div>
+
+  <div class="card"><h2>Add a team <small>(trigger creates its standings row)</small></h2>
+   <form id="f-team">
+    <label>Team name<input name="team_name" required></label>
+    <label>City<input name="city" required></label>
+    <label>Coach<input name="coach" required></label>
+    <button class="primary">Add team</button></form></div>
+ </section>
+</main>
+<div id="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>
